@@ -350,12 +350,12 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
     <div class="test-bar">
       <select class="sel-unit" id="unit-select" onchange="changeUnit()">
         <option value="all">📚 All Units</option>
-        <option value="Unit 1">Unit 1 — Đồ vật</option>
-        <option value="Unit 2">Unit 2 — Nghề nghiệp</option>
+        <option value="Unit 1">Unit 1 — Đồ vật cá nhân</option>
+        <option value="Unit 2">Unit 2 — Nghề nghiệp & HĐ</option>
         <option value="Unit 3">Unit 3 — Gia đình</option>
-        <option value="Unit 4">Unit 4 — Hoạt động</option>
-        <option value="Unit 5">Unit 5 — Trang phục</option>
-        <option value="Unit 6">Unit 6 — Nhà ở</option>
+        <option value="Unit 4">Unit 4 — HĐ hàng ngày & Thời tiết</option>
+        <option value="Unit 5">Unit 5 — Trang phục & Số TT</option>
+        <option value="Unit 6">Unit 6 — Nhà ở & Thành phố</option>
       </select>
       <div class="scores">
         <div class="sc"><div class="sc-n" style="color:var(--green)" id="sc-ok">0</div><div class="sc-l">Đúng</div></div>
@@ -403,62 +403,309 @@ html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;backgroun
 
 <script>
 const words=[
-  {u:"Unit 1",e:"candy",v:"kẹo"},{u:"Unit 1",e:"cell phone",v:"điện thoại di động"},
-  {u:"Unit 1",e:"change purse",v:"ví đựng tiền lẻ"},{u:"Unit 1",e:"chewing gum",v:"kẹo cao su"},
-  {u:"Unit 1",e:"comb",v:"cái lược"},{u:"Unit 1",e:"flashlight",v:"đèn pin"},
-  {u:"Unit 1",e:"glasses",v:"kính mắt"},{u:"Unit 1",e:"gloves",v:"găng tay"},
-  {u:"Unit 1",e:"hairbrush",v:"lược chải tóc"},{u:"Unit 1",e:"identity card",v:"thẻ căn cước"},
-  {u:"Unit 1",e:"key",v:"chìa khóa"},{u:"Unit 1",e:"mirror",v:"cái gương"},
-  {u:"Unit 1",e:"photo",v:"bức ảnh"},{u:"Unit 1",e:"stamp",v:"con tem"},
-  {u:"Unit 1",e:"sunglasses",v:"kính râm"},{u:"Unit 1",e:"tablet",v:"máy tính bảng"},
-  {u:"Unit 1",e:"tissues",v:"khăn giấy"},{u:"Unit 1",e:"umbrella",v:"cái ô"},
-  {u:"Unit 1",e:"wallet",v:"ví tiền"},{u:"Unit 1",e:"watch",v:"đồng hồ đeo tay"},
-  {u:"Unit 2",e:"accountant",v:"kế toán"},{u:"Unit 2",e:"businessperson",v:"doanh nhân"},
-  {u:"Unit 2",e:"chef",v:"đầu bếp"},{u:"Unit 2",e:"construction worker",v:"công nhân xây dựng"},
-  {u:"Unit 2",e:"dentist",v:"nha sĩ"},{u:"Unit 2",e:"doctor",v:"bác sĩ"},
-  {u:"Unit 2",e:"electrician",v:"thợ điện"},{u:"Unit 2",e:"flight attendant",v:"tiếp viên hàng không"},
-  {u:"Unit 2",e:"hairdresser",v:"thợ cắt tóc"},{u:"Unit 2",e:"lawyer",v:"luật sư"},
-  {u:"Unit 2",e:"mechanic",v:"thợ sửa máy"},{u:"Unit 2",e:"nurse",v:"y tá"},
-  {u:"Unit 2",e:"police officer",v:"cảnh sát"},{u:"Unit 2",e:"receptionist",v:"lễ tân"},
-  {u:"Unit 2",e:"salesclerk",v:"nhân viên bán hàng"},{u:"Unit 2",e:"singer",v:"ca sĩ"},
-  {u:"Unit 2",e:"taxi driver",v:"tài xế taxi"},{u:"Unit 2",e:"teacher",v:"giáo viên"},
-  {u:"Unit 2",e:"tour guide",v:"hướng dẫn viên"},{u:"Unit 2",e:"waiter",v:"bồi bàn"},
-  {u:"Unit 3",e:"aunt",v:"cô / dì"},{u:"Unit 3",e:"brother",v:"anh trai"},
-  {u:"Unit 3",e:"brother in law",v:"anh rể"},{u:"Unit 3",e:"child",v:"đứa trẻ"},
-  {u:"Unit 3",e:"cousin",v:"anh chị em họ"},{u:"Unit 3",e:"daughter",v:"con gái"},
-  {u:"Unit 3",e:"father",v:"bố"},{u:"Unit 3",e:"grandfather",v:"ông"},
-  {u:"Unit 3",e:"grandmother",v:"bà"},{u:"Unit 3",e:"grandson",v:"cháu trai"},
-  {u:"Unit 3",e:"husband",v:"chồng"},{u:"Unit 3",e:"mother",v:"mẹ"},
-  {u:"Unit 3",e:"nephew",v:"cháu trai"},{u:"Unit 3",e:"niece",v:"cháu gái"},
-  {u:"Unit 3",e:"parent",v:"bố mẹ"},{u:"Unit 3",e:"sister",v:"chị / em gái"},
-  {u:"Unit 3",e:"son",v:"con trai"},{u:"Unit 3",e:"uncle",v:"chú / bác"},{u:"Unit 3",e:"wife",v:"vợ"},
-  {u:"Unit 4",e:"finish school",v:"tan học"},{u:"Unit 4",e:"finish work",v:"tan làm"},
-  {u:"Unit 4",e:"get home",v:"về nhà"},{u:"Unit 4",e:"get dressed",v:"mặc quần áo"},
-  {u:"Unit 4",e:"get up",v:"thức dậy"},{u:"Unit 4",e:"go to bed",v:"đi ngủ"},
-  {u:"Unit 4",e:"go to school",v:"đi học"},{u:"Unit 4",e:"go to sleep",v:"đi ngủ"},
-  {u:"Unit 4",e:"go to work",v:"đi làm"},{u:"Unit 4",e:"have breakfast",v:"ăn sáng"},
-  {u:"Unit 4",e:"have dinner",v:"ăn tối"},{u:"Unit 4",e:"have lunch",v:"ăn trưa"},
-  {u:"Unit 4",e:"take a bath",v:"tắm bồn"},{u:"Unit 4",e:"take a shower",v:"tắm vòi sen"},
+  /* ── UNIT 1: You and Me – Personal objects ── */
+  {u:"Unit 1",e:"candy",v:"kẹo"},
+  {u:"Unit 1",e:"cell phone",v:"điện thoại di động"},
+  {u:"Unit 1",e:"change purse",v:"ví đựng tiền lẻ"},
+  {u:"Unit 1",e:"chewing gum",v:"kẹo cao su"},
+  {u:"Unit 1",e:"comb",v:"cái lược"},
+  {u:"Unit 1",e:"flashlight",v:"đèn pin"},
+  {u:"Unit 1",e:"glasses",v:"kính mắt"},
+  {u:"Unit 1",e:"gloves",v:"găng tay"},
+  {u:"Unit 1",e:"hairbrush",v:"lược chải tóc"},
+  {u:"Unit 1",e:"identity card",v:"thẻ căn cước (CMND)"},
+  {u:"Unit 1",e:"key",v:"chìa khóa"},
+  {u:"Unit 1",e:"mirror",v:"cái gương"},
+  {u:"Unit 1",e:"photo",v:"bức ảnh"},
+  {u:"Unit 1",e:"stamp",v:"con tem"},
+  {u:"Unit 1",e:"sunglasses",v:"kính râm / kính mát"},
+  {u:"Unit 1",e:"tablet",v:"máy tính bảng"},
+  {u:"Unit 1",e:"tissues",v:"khăn giấy"},
+  {u:"Unit 1",e:"umbrella",v:"cái ô / cái dù"},
+  {u:"Unit 1",e:"wallet",v:"ví tiền (nam)"},
+  {u:"Unit 1",e:"watch",v:"đồng hồ đeo tay"},
+
+  /* ── UNIT 2: Work and Play – Jobs ── */
+  {u:"Unit 2",e:"accountant",v:"nhân viên kế toán"},
+  {u:"Unit 2",e:"businessperson",v:"doanh nhân / người làm kinh doanh"},
+  {u:"Unit 2",e:"chef",v:"đầu bếp"},
+  {u:"Unit 2",e:"construction worker",v:"công nhân xây dựng"},
+  {u:"Unit 2",e:"dentist",v:"nha sĩ"},
+  {u:"Unit 2",e:"doctor",v:"bác sĩ"},
+  {u:"Unit 2",e:"electrician",v:"thợ điện"},
+  {u:"Unit 2",e:"flight attendant",v:"tiếp viên hàng không"},
+  {u:"Unit 2",e:"hairdresser",v:"thợ cắt tóc"},
+  {u:"Unit 2",e:"lawyer",v:"luật sư"},
+  {u:"Unit 2",e:"mechanic",v:"thợ máy / thợ sửa xe"},
+  {u:"Unit 2",e:"nurse",v:"y tá"},
+  {u:"Unit 2",e:"police officer",v:"cảnh sát"},
+  {u:"Unit 2",e:"receptionist",v:"nhân viên lễ tân"},
+  {u:"Unit 2",e:"salesclerk",v:"nhân viên bán hàng"},
+  {u:"Unit 2",e:"singer",v:"ca sĩ"},
+  {u:"Unit 2",e:"taxi driver",v:"tài xế taxi"},
+  {u:"Unit 2",e:"teacher",v:"giáo viên"},
+  {u:"Unit 2",e:"tour guide",v:"hướng dẫn viên du lịch"},
+  {u:"Unit 2",e:"waiter / waitress",v:"bồi bàn / người hầu bàn"},
+
+  /* Unit 2 – Job verbs */
+  {u:"Unit 2",e:"cook",v:"nấu ăn"},
+  {u:"Unit 2",e:"cut",v:"cắt"},
+  {u:"Unit 2",e:"drive",v:"lái xe"},
+  {u:"Unit 2",e:"finish",v:"kết thúc / hoàn thành"},
+  {u:"Unit 2",e:"fix",v:"sửa chữa"},
+  {u:"Unit 2",e:"help",v:"giúp đỡ"},
+  {u:"Unit 2",e:"make",v:"làm / tạo ra"},
+  {u:"Unit 2",e:"sell",v:"bán"},
+  {u:"Unit 2",e:"serve",v:"phục vụ"},
+  {u:"Unit 2",e:"start",v:"bắt đầu"},
+  {u:"Unit 2",e:"teach",v:"dạy"},
+  {u:"Unit 2",e:"wear",v:"mặc / đeo / đội"},
+
+  /* Unit 2 – Activities (1) */
+  {u:"Unit 2",e:"go out for a walk",v:"đi dạo bộ"},
+  {u:"Unit 2",e:"go out for coffee",v:"đi uống cà phê"},
+  {u:"Unit 2",e:"go out for dinner",v:"đi ăn tối ở ngoài"},
+  {u:"Unit 2",e:"go running",v:"đi chạy bộ"},
+  {u:"Unit 2",e:"go to the movies",v:"đi xem phim"},
+  {u:"Unit 2",e:"listen to music",v:"nghe nhạc"},
+  {u:"Unit 2",e:"listen to the radio",v:"nghe đài / radio"},
+  {u:"Unit 2",e:"meet friends",v:"gặp gỡ bạn bè"},
+  {u:"Unit 2",e:"play tennis",v:"chơi quần vợt"},
+  {u:"Unit 2",e:"play the guitar",v:"chơi đàn ghi ta"},
+  {u:"Unit 2",e:"read a book",v:"đọc một cuốn sách"},
+  {u:"Unit 2",e:"read the newspaper",v:"đọc báo"},
+  {u:"Unit 2",e:"relax",v:"thư giãn"},
+  {u:"Unit 2",e:"see a movie",v:"xem một bộ phim"},
+  {u:"Unit 2",e:"spend time with family",v:"dành thời gian cho gia đình"},
+  {u:"Unit 2",e:"study",v:"học tập / nghiên cứu"},
+  {u:"Unit 2",e:"watch soccer",v:"xem bóng đá"},
+  {u:"Unit 2",e:"watch TV",v:"xem tivi"},
+
+  /* Unit 2 – Activities (2) */
+  {u:"Unit 2",e:"do karate",v:"tập võ karate"},
+  {u:"Unit 2",e:"do yoga",v:"tập yoga"},
+  {u:"Unit 2",e:"go bike riding",v:"đi xe đạp"},
+  {u:"Unit 2",e:"go bowling",v:"đi chơi bowling"},
+  {u:"Unit 2",e:"go dancing",v:"đi khiêu vũ / nhảy"},
+  {u:"Unit 2",e:"go shopping",v:"đi mua sắm"},
+  {u:"Unit 2",e:"go swimming",v:"đi bơi"},
+  {u:"Unit 2",e:"have a barbecue",v:"tổ chức tiệc nướng ngoài trời"},
+  {u:"Unit 2",e:"have a picnic",v:"đi dã ngoại"},
+  {u:"Unit 2",e:"play golf",v:"chơi golf"},
+  {u:"Unit 2",e:"play the violin",v:"chơi đàn violin / đàn vĩ cầm"},
+  {u:"Unit 2",e:"play volleyball",v:"chơi bóng truyền"},
+  {u:"Unit 2",e:"visit a gallery",v:"thăm triển lãm nghệ thuật"},
+  {u:"Unit 2",e:"visit a museum",v:"thăm bảo tàng"},
+  {u:"Unit 2",e:"visit relatives",v:"thăm họ hàng / người thân"},
+  {u:"Unit 2",e:"walk the dog",v:"dắt chó đi dạo"},
+
+  /* ── UNIT 3: People in My Life – Family ── */
+  {u:"Unit 3",e:"aunt",v:"cô / dì / bác gái / thím"},
+  {u:"Unit 3",e:"brother",v:"anh trai / em trai"},
+  {u:"Unit 3",e:"brother-in-law",v:"anh rể / em rể"},
+  {u:"Unit 3",e:"child / children",v:"đứa trẻ / những đứa trẻ"},
+  {u:"Unit 3",e:"cousin",v:"anh chị em họ"},
+  {u:"Unit 3",e:"daughter",v:"con gái"},
+  {u:"Unit 3",e:"father",v:"bố / cha"},
+  {u:"Unit 3",e:"father-in-law",v:"bố chồng / bố vợ"},
+  {u:"Unit 3",e:"grandchildren",v:"các cháu"},
+  {u:"Unit 3",e:"granddaughter",v:"cháu gái"},
+  {u:"Unit 3",e:"grandfather",v:"ông"},
+  {u:"Unit 3",e:"grandmother",v:"bà"},
+  {u:"Unit 3",e:"grandparent",v:"ông hoặc bà"},
+  {u:"Unit 3",e:"grandson",v:"cháu trai"},
+  {u:"Unit 3",e:"husband",v:"chồng"},
+  {u:"Unit 3",e:"in-laws",v:"gia đình bên chồng hoặc vợ"},
+  {u:"Unit 3",e:"mother",v:"mẹ"},
+  {u:"Unit 3",e:"mother-in-law",v:"mẹ chồng / mẹ vợ"},
+  {u:"Unit 3",e:"nephew",v:"cháu trai"},
+  {u:"Unit 3",e:"niece",v:"cháu gái"},
+  {u:"Unit 3",e:"parent",v:"bố mẹ"},
+  {u:"Unit 3",e:"sister",v:"chị / em gái"},
+  {u:"Unit 3",e:"sister-in-law",v:"chị dâu / em dâu / chị em vợ / chị em chồng"},
+  {u:"Unit 3",e:"son",v:"con trai"},
+  {u:"Unit 3",e:"uncle",v:"chú / bác trai / cậu / dượng"},
+  {u:"Unit 3",e:"wife",v:"vợ"},
+
+  /* ── UNIT 4: Home and Away – Daily routine ── */
+  {u:"Unit 4",e:"finish school",v:"tan học"},
+  {u:"Unit 4",e:"finish work",v:"tan làm"},
+  {u:"Unit 4",e:"get home",v:"về đến nhà"},
+  {u:"Unit 4",e:"get dressed",v:"mặc quần áo"},
+  {u:"Unit 4",e:"get up",v:"ngủ dậy"},
+  {u:"Unit 4",e:"go to bed",v:"đi ngủ"},
+  {u:"Unit 4",e:"go to school",v:"đi học"},
+  {u:"Unit 4",e:"go to sleep",v:"bắt đầu ngủ / chìm vào giấc ngủ"},
+  {u:"Unit 4",e:"go to work",v:"đi làm"},
+  {u:"Unit 4",e:"have breakfast",v:"ăn sáng"},
+  {u:"Unit 4",e:"have dinner",v:"ăn tối"},
+  {u:"Unit 4",e:"have lunch",v:"ăn trưa"},
+  {u:"Unit 4",e:"take a bath",v:"tắm bồn"},
+  {u:"Unit 4",e:"take a shower",v:"tắm vòi sen"},
   {u:"Unit 4",e:"wake up",v:"thức dậy"},
-  {u:"Unit 5",e:"belt",v:"thắt lưng"},{u:"Unit 5",e:"blouse",v:"áo sơ mi nữ"},
-  {u:"Unit 5",e:"boots",v:"ủng"},{u:"Unit 5",e:"bracelet",v:"vòng tay"},
-  {u:"Unit 5",e:"coat",v:"áo khoác"},{u:"Unit 5",e:"dress",v:"váy"},
-  {u:"Unit 5",e:"earrings",v:"bông tai"},{u:"Unit 5",e:"gloves",v:"găng tay"},
-  {u:"Unit 5",e:"hat",v:"mũ"},{u:"Unit 5",e:"jacket",v:"áo khoác"},
-  {u:"Unit 5",e:"jeans",v:"quần jean"},{u:"Unit 5",e:"shirt",v:"áo sơ mi"},
-  {u:"Unit 5",e:"shoes",v:"giày"},{u:"Unit 5",e:"shorts",v:"quần short"},
-  {u:"Unit 5",e:"skirt",v:"váy"},{u:"Unit 5",e:"sneakers",v:"giày thể thao"},
-  {u:"Unit 5",e:"socks",v:"tất"},{u:"Unit 5",e:"suit",v:"bộ vest"},
-  {u:"Unit 5",e:"sweater",v:"áo len"},{u:"Unit 5",e:"tie",v:"cà vạt"},{u:"Unit 5",e:"T-shirt",v:"áo phông"},
-  {u:"Unit 6",e:"attic",v:"gác mái"},{u:"Unit 6",e:"balcony",v:"ban công"},
-  {u:"Unit 6",e:"basement",v:"tầng hầm"},{u:"Unit 6",e:"bathroom",v:"phòng tắm"},
-  {u:"Unit 6",e:"bedroom",v:"phòng ngủ"},{u:"Unit 6",e:"dining room",v:"phòng ăn"},
-  {u:"Unit 6",e:"garage",v:"nhà để xe"},{u:"Unit 6",e:"hall",v:"sảnh"},
-  {u:"Unit 6",e:"kitchen",v:"nhà bếp"},{u:"Unit 6",e:"living room",v:"phòng khách"},
-  {u:"Unit 6",e:"stairs",v:"cầu thang"},{u:"Unit 6",e:"study",v:"phòng học"},{u:"Unit 6",e:"yard",v:"sân"}
+
+  /* Unit 4 – Weather */
+  {u:"Unit 4",e:"cloudy",v:"có mây / nhiều mây"},
+  {u:"Unit 4",e:"cold",v:"lạnh"},
+  {u:"Unit 4",e:"foggy",v:"có sương mù"},
+  {u:"Unit 4",e:"hot",v:"nóng"},
+  {u:"Unit 4",e:"icy",v:"đóng băng / giá lạnh"},
+  {u:"Unit 4",e:"raining",v:"đang mưa"},
+  {u:"Unit 4",e:"rainy",v:"có mưa"},
+  {u:"Unit 4",e:"snowing",v:"đang có tuyết rơi"},
+  {u:"Unit 4",e:"snowy",v:"có tuyết"},
+  {u:"Unit 4",e:"sunny",v:"có nắng"},
+  {u:"Unit 4",e:"warm",v:"ấm áp"},
+  {u:"Unit 4",e:"wet",v:"ẩm ướt"},
+  {u:"Unit 4",e:"windy",v:"có gió"},
+
+  /* Unit 4 – Seasons */
+  {u:"Unit 4",e:"spring",v:"mùa xuân"},
+  {u:"Unit 4",e:"summer",v:"mùa hè"},
+  {u:"Unit 4",e:"fall",v:"mùa thu"},
+  {u:"Unit 4",e:"winter",v:"mùa đông"},
+
+  /* Unit 4 – Hobbies */
+  {u:"Unit 4",e:"bake",v:"nướng bánh"},
+  {u:"Unit 4",e:"collect coins",v:"sưu tầm tiền xu"},
+  {u:"Unit 4",e:"collect stamps",v:"sưu tầm tem"},
+  {u:"Unit 4",e:"dance",v:"nhảy múa"},
+  {u:"Unit 4",e:"draw",v:"vẽ (bút chì / bút mực)"},
+  {u:"Unit 4",e:"knit",v:"đan (len)"},
+  {u:"Unit 4",e:"make jewelry",v:"làm đồ trang sức"},
+  {u:"Unit 4",e:"paint",v:"vẽ (màu / sơn)"},
+  {u:"Unit 4",e:"play chess",v:"chơi cờ vua"},
+  {u:"Unit 4",e:"play online games",v:"chơi trò chơi trực tuyến"},
+  {u:"Unit 4",e:"play the drums",v:"chơi trống"},
+  {u:"Unit 4",e:"sew",v:"may vá"},
+  {u:"Unit 4",e:"sing",v:"hát"},
+  {u:"Unit 4",e:"take photos",v:"chụp ảnh"},
+  {u:"Unit 4",e:"write a blog",v:"viết blog"},
+
+  /* ── UNIT 5: What Are You Wearing? – Clothes ── */
+  {u:"Unit 5",e:"belt",v:"thắt lưng (dây nịt)"},
+  {u:"Unit 5",e:"blouse",v:"áo sơ mi nữ"},
+  {u:"Unit 5",e:"boots",v:"ủng / giày boot"},
+  {u:"Unit 5",e:"bracelet",v:"vòng tay"},
+  {u:"Unit 5",e:"coat",v:"áo khoác dài / áo chống"},
+  {u:"Unit 5",e:"dress",v:"váy liền thân"},
+  {u:"Unit 5",e:"earrings",v:"bông tai (khuyên tai)"},
+  {u:"Unit 5",e:"gloves",v:"găng tay"},
+  {u:"Unit 5",e:"hat",v:"mũ"},
+  {u:"Unit 5",e:"jacket",v:"áo khoác ngắn"},
+  {u:"Unit 5",e:"jeans",v:"quần jeans (quần bò)"},
+  {u:"Unit 5",e:"jewelry",v:"trang sức"},
+  {u:"Unit 5",e:"necklace",v:"dây chuyền"},
+  {u:"Unit 5",e:"pants",v:"quần dài"},
+  {u:"Unit 5",e:"sandals",v:"dép xăng-đan"},
+  {u:"Unit 5",e:"scarf",v:"khăn quàng cổ"},
+  {u:"Unit 5",e:"shirt",v:"áo sơ mi"},
+  {u:"Unit 5",e:"shoes",v:"giày"},
+  {u:"Unit 5",e:"shorts",v:"quần đùi (quần ngắn)"},
+  {u:"Unit 5",e:"skirt",v:"chân váy"},
+  {u:"Unit 5",e:"sneakers",v:"giày thể thao"},
+  {u:"Unit 5",e:"socks",v:"tất (vớ)"},
+  {u:"Unit 5",e:"suit",v:"bộ com-lê / bộ vest"},
+  {u:"Unit 5",e:"sweater",v:"áo len"},
+  {u:"Unit 5",e:"tie",v:"cà vạt"},
+  {u:"Unit 5",e:"T-shirt",v:"áo thun (áo phông)"},
+
+  /* Unit 5 – Ordinal numbers */
+  {u:"Unit 5",e:"first",v:"thứ nhất"},
+  {u:"Unit 5",e:"second",v:"thứ hai"},
+  {u:"Unit 5",e:"third",v:"thứ ba"},
+  {u:"Unit 5",e:"fourth",v:"thứ bốn"},
+  {u:"Unit 5",e:"fifth",v:"thứ năm"},
+  {u:"Unit 5",e:"sixth",v:"thứ sáu"},
+  {u:"Unit 5",e:"seventh",v:"thứ bảy"},
+  {u:"Unit 5",e:"eighth",v:"thứ tám"},
+  {u:"Unit 5",e:"ninth",v:"thứ chín"},
+  {u:"Unit 5",e:"tenth",v:"thứ mười"},
+  {u:"Unit 5",e:"eleventh",v:"thứ mười một"},
+  {u:"Unit 5",e:"twelfth",v:"thứ mười hai"},
+  {u:"Unit 5",e:"thirteenth",v:"thứ mười ba"},
+  {u:"Unit 5",e:"fourteenth",v:"thứ mười bốn"},
+  {u:"Unit 5",e:"fifteenth",v:"thứ mười lăm"},
+  {u:"Unit 5",e:"twentieth",v:"thứ hai mươi"},
+  {u:"Unit 5",e:"twenty-first",v:"thứ hai mươi mốt"},
+  {u:"Unit 5",e:"twenty-second",v:"thứ hai mươi hai"},
+  {u:"Unit 5",e:"thirtieth",v:"thứ ba mươi"},
+  {u:"Unit 5",e:"fortieth",v:"thứ bốn mươi"},
+  {u:"Unit 5",e:"fiftieth",v:"thứ năm mươi"},
+
+  /* ── UNIT 6: Homes and Cities – Rooms ── */
+  {u:"Unit 6",e:"attic",v:"gác mái"},
+  {u:"Unit 6",e:"balcony",v:"ban công"},
+  {u:"Unit 6",e:"basement",v:"tầng hầm"},
+  {u:"Unit 6",e:"bathroom",v:"phòng tắm"},
+  {u:"Unit 6",e:"bedroom",v:"phòng ngủ"},
+  {u:"Unit 6",e:"dining room",v:"phòng ăn"},
+  {u:"Unit 6",e:"garage",v:"nhà để xe"},
+  {u:"Unit 6",e:"hall",v:"sảnh / hành lang"},
+  {u:"Unit 6",e:"kitchen",v:"nhà bếp"},
+  {u:"Unit 6",e:"living room",v:"phòng khách"},
+  {u:"Unit 6",e:"stairs",v:"cầu thang"},
+  {u:"Unit 6",e:"study",v:"phòng học / làm việc"},
+  {u:"Unit 6",e:"yard",v:"sân"},
+
+  /* Unit 6 – Furniture */
+  {u:"Unit 6",e:"armchair",v:"ghế bành"},
+  {u:"Unit 6",e:"bed",v:"giường"},
+  {u:"Unit 6",e:"cabinet",v:"tủ có ngăn kéo"},
+  {u:"Unit 6",e:"chair",v:"ghế"},
+  {u:"Unit 6",e:"closet",v:"tủ đựng quần áo"},
+  {u:"Unit 6",e:"desk",v:"bàn làm việc"},
+  {u:"Unit 6",e:"mirror",v:"gương"},
+  {u:"Unit 6",e:"shelf / shelves",v:"kệ / giá để đồ"},
+  {u:"Unit 6",e:"sofa",v:"ghế sofa"},
+  {u:"Unit 6",e:"stove",v:"bếp"},
+  {u:"Unit 6",e:"table",v:"bàn"},
+  {u:"Unit 6",e:"washing machine",v:"máy giặt"},
+
+  /* Unit 6 – Common adjectives */
+  {u:"Unit 6",e:"cheap",v:"rẻ"},
+  {u:"Unit 6",e:"clean",v:"sạch sẽ"},
+  {u:"Unit 6",e:"comfortable",v:"thoải mái / dễ chịu"},
+  {u:"Unit 6",e:"dirty",v:"dơ bẩn"},
+  {u:"Unit 6",e:"expensive",v:"đắt tiền"},
+  {u:"Unit 6",e:"heavy",v:"nặng"},
+  {u:"Unit 6",e:"light",v:"nhẹ / sáng"},
+  {u:"Unit 6",e:"modern",v:"hiện đại"},
+  {u:"Unit 6",e:"narrow",v:"hẹp"},
+  {u:"Unit 6",e:"noisy",v:"ồn ào"},
+  {u:"Unit 6",e:"quiet",v:"yên tĩnh"},
+  {u:"Unit 6",e:"traditional",v:"truyền thống"},
+  {u:"Unit 6",e:"uncomfortable",v:"ở phải mới"},
+  {u:"Unit 6",e:"wide",v:"rộng"},
+
+  /* Unit 6 – Places in a city */
+  {u:"Unit 6",e:"apartment building",v:"tòa nhà chung cư"},
+  {u:"Unit 6",e:"bridge",v:"cây cầu"},
+  {u:"Unit 6",e:"cathedral",v:"nhà thờ lớn"},
+  {u:"Unit 6",e:"concert hall",v:"nhà hát / phòng hòa nhạc"},
+  {u:"Unit 6",e:"library",v:"thư viện"},
+  {u:"Unit 6",e:"market",v:"chợ"},
+  {u:"Unit 6",e:"monument",v:"đài tưởng niệm"},
+  {u:"Unit 6",e:"mosque",v:"nhà thờ Hồi giáo"},
+  {u:"Unit 6",e:"office building",v:"tòa nhà văn phòng"},
+  {u:"Unit 6",e:"park",v:"công viên"},
+  {u:"Unit 6",e:"skyscraper",v:"tòa nhà chọc trời"},
+  {u:"Unit 6",e:"square",v:"quảng trường"},
+  {u:"Unit 6",e:"stadium",v:"sân vận động"},
+  {u:"Unit 6",e:"theater",v:"nhà hát / rạp hát"},
 ];
-const unitTopics={"Unit 1":"Đồ vật thường dùng","Unit 2":"Nghề nghiệp","Unit 3":"Gia đình","Unit 4":"Hoạt động hàng ngày","Unit 5":"Trang phục","Unit 6":"Phòng trong nhà"};
-const unitColors={"Unit 1":"#e05c2a","Unit 2":"#2a6ee0","Unit 3":"#2ab87a","Unit 4":"#e09a2a","Unit 5":"#9b2ae0","Unit 6":"#2ac4e0"};
+const unitTopics={
+  "Unit 1":"Đồ vật cá nhân",
+  "Unit 2":"Nghề nghiệp & Hoạt động",
+  "Unit 3":"Gia đình",
+  "Unit 4":"Hoạt động hàng ngày & Thời tiết",
+  "Unit 5":"Trang phục & Số thứ tự",
+  "Unit 6":"Nhà ở & Thành phố"
+};
+const unitColors={
+  "Unit 1":"#e05c2a","Unit 2":"#2a6ee0","Unit 3":"#2ab87a",
+  "Unit 4":"#e09a2a","Unit 5":"#9b2ae0","Unit 6":"#2ac4e0"
+};
 const UNITS=["Unit 1","Unit 2","Unit 3","Unit 4","Unit 5","Unit 6"];
 
 /* STATS */
@@ -608,9 +855,30 @@ function checkAnswer(){
 function nextWord(){idx++;loadWord()}
 function speakWord(){
   if(!currentWord)return;
-  const btn=document.getElementById('speak-btn');btn.classList.add('speaking');
-  const audio=new Audio(`https://translate.googleapis.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(currentWord.e)}&tl=en&client=gtx`);
-  audio.play();audio.onended=()=>btn.classList.remove('speaking');audio.onerror=()=>btn.classList.remove('speaking');
+  const btn=document.getElementById('speak-btn');
+  btn.classList.add('speaking');
+  const done=()=>btn.classList.remove('speaking');
+
+  // Primary: Web Speech API (always works on mobile, no network needed)
+  if('speechSynthesis' in window){
+    window.speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(currentWord.e);
+    u.lang='en-US';u.rate=0.85;u.pitch=1;
+    // Pick a good English voice if available
+    const voices=window.speechSynthesis.getVoices();
+    const enVoice=voices.find(v=>v.lang.startsWith('en')&&v.name.toLowerCase().includes('google'))
+      ||voices.find(v=>v.lang.startsWith('en-US'))
+      ||voices.find(v=>v.lang.startsWith('en'));
+    if(enVoice)u.voice=enVoice;
+    u.onend=done;u.onerror=done;
+    window.speechSynthesis.speak(u);
+    return;
+  }
+  // Fallback: Google TTS audio
+  const url=`https://translate.googleapis.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(currentWord.e)}&tl=en-US&client=gtx`;
+  const audio=new Audio(url);
+  audio.onended=done;audio.onerror=done;
+  audio.play().catch(done);
 }
 
 /* NAV */
@@ -626,6 +894,11 @@ function showPage(name){
 function toggleDark(){const h=document.documentElement;h.setAttribute('data-theme',h.getAttribute('data-theme')==='dark'?'':'dark')}
 
 buildHome();changeUnit();
+// Pre-load voices for SpeechSynthesis (some browsers load async)
+if('speechSynthesis' in window){
+  window.speechSynthesis.getVoices();
+  window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();
+}
 </script>
 </body>
 </html>
